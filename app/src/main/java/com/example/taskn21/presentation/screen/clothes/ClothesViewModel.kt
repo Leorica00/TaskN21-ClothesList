@@ -2,9 +2,8 @@ package com.example.taskn21.presentation.screen.clothes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskn21.R
 import com.example.taskn21.data.remote.common.Resource
-import com.example.taskn21.domain.use_case.AddUserToDataBase
+import com.example.taskn21.domain.use_case.AddClothesToDataBase
 import com.example.taskn21.domain.use_case.GetClothesFromApiUseCase
 import com.example.taskn21.domain.use_case.GetClothesFromDataBaseUseCase
 import com.example.taskn21.presentation.event.ClothesEvent
@@ -22,7 +21,7 @@ import javax.inject.Inject
 class ClothesViewModel @Inject constructor(
     private val getClothesFromApiUseCase: GetClothesFromApiUseCase,
     getClothesFromDataBaseUseCase: GetClothesFromDataBaseUseCase,
-    private val addUserUseCase: AddUserToDataBase
+    private val addClothesUseCase: AddClothesToDataBase
 ) : ViewModel() {
 
     private val _usersStateFlow = MutableStateFlow(ClothesState())
@@ -58,7 +57,7 @@ class ClothesViewModel @Inject constructor(
                                 if (clothes.isNotEmpty())
                                     _usersStateFlow.update { currentState -> currentState.copy(clothes = clothes, isLoading = false) }
                                 else
-                                    _usersStateFlow.update { clothesState -> clothesState.copy(errorMessage = R.string.no_items_found.toString(), isLoading = false) }
+                                    _usersStateFlow.update { clothesState -> clothesState.copy(errorMessage = "No Items Found",  isLoading = false) }
 
                             }
                         } else {
@@ -72,13 +71,13 @@ class ClothesViewModel @Inject constructor(
 
     private fun addAllClothes() {
         viewModelScope.launch {
-            addUserUseCase(_usersStateFlow.value.clothes!!)
+            addClothesUseCase(_usersStateFlow.value.clothes!!)
         }
     }
 
     private fun addSingleClothes(selectedClothes: Clothes) {
         viewModelScope.launch {
-            addUserUseCase(listOf(selectedClothes))
+            addClothesUseCase(listOf(selectedClothes))
         }
     }
 

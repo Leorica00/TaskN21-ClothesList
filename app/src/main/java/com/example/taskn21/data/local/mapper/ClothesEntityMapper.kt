@@ -5,4 +5,4 @@ import com.example.taskn21.domain.model.GetClothes
 
 fun ClothesEntity.toDomain() = GetClothes(id, cover, price, title, favourite)
 
-fun GetClothes.toEntity() = ClothesEntity(id, cover, price, title, favorite)
+fun GetClothes.toData() = ClothesEntity(id, cover, price, title, favorite)

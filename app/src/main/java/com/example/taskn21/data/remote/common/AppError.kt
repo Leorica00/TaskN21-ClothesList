@@ -14,7 +14,6 @@ sealed class AppError(open val message: String) {
 
     companion object {
         fun fromException(t: Throwable): AppError {
-//            val adapter: JsonAdapter<ErrorResponseDto> = Moshi.Builder().add(KotlinJsonAdapterFactory()).build().adapter(ErrorResponseDto::class.java)
             return when (t) {
                 is IOException -> {
                     NetworkError("Network error occurred: No Internet")
